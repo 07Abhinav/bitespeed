@@ -32,8 +32,6 @@ exports.identifyContact = async (req, res) => {
           emails: [newContact.email].filter(Boolean),
           phoneNumbers: [newContact.phoneNumber].filter(Boolean),
           secondaryContactIds: [],
-          createdAt: newContact.createdAt,
-          updatedAt: newContact.updatedAt,
         },
       });
     }

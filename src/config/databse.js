@@ -1,14 +1,10 @@
+const path = require("path");
 const { Sequelize } = require("sequelize");
-require("dotenv").config();
 
 const sequelize = new Sequelize({
   dialect: "sqlite",
-  storage: "database.sqlite", // SQLite file
-  logging: false,
+  storage: path.join(__dirname, "..", "data", "database.sqlite"),  // ✅ Persistent storage
+  logging: false,  // Optional: Disable logging
 });
-
-sequelize.sync({ alter: true }) // Ensures the table structure updates
-  .then(() => console.log("SQLite Database synced"))
-  .catch(err => console.error("Database sync error:", err));
 
 module.exports = sequelize;
