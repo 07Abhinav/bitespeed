@@ -1,14 +1,15 @@
-const { Sequelize } = require("sequelize");
-require("dotenv").config();
+const { Pool } = require('pg');
+require('dotenv').config();
 
-const sequelize = new Sequelize({
-  dialect: "sqlite",
-  storage: "database.sqlite", // SQLite file
-  logging: false,
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL, // Render provides this
+    ssl: {
+        rejectUnauthorized: false, // Required for Render PostgreSQL
+    },
 });
 
-sequelize.sync({ alter: true }) // Ensures the table structure updates
-  .then(() => console.log("SQLite Database synced"))
-  .catch(err => console.error("Database sync error:", err));
+pool.connect()
+    .then(() => console.log('Connected to PostgreSQL'))
+    .catch(err => console.error('Error connecting to PostgreSQL:', err));
 
-module.exports = sequelize;
+module.exports = pool;
